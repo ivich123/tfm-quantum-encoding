@@ -24,12 +24,22 @@ def check_system():
         for i in range(n_gpus):
             print(f"  - GPU {i}: {torch.cuda.get_device_name(i)}")
             
-        # Memory check
+        # Functional Test
         try:
+            print("  - Functional Check: ", end="")
+            # Try to allocate a tensor on GPU
+            dummy = torch.zeros(1).cuda()
+            del dummy
+            print("✓ OK (Tensor allocation successful)")
+            
+            # Memory check
             free, total = torch.cuda.mem_get_info()
             print(f"  - Memory: {free/1024**3:.2f} GB free / {total/1024**3:.2f} GB total")
-        except:
-            pass
+            
+        except Exception as e:
+            print("❌ FAILED")
+            print(f"    ⚠ Error: {e}")
+            print("    ⚠ NOTE: CUDA is installed but not working (likely version mismatch). PyTorch will fallback to CPU.")
     else:
         print("CUDA Available: No (running on CPU)")
 
