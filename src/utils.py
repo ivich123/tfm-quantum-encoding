@@ -15,10 +15,19 @@ def set_seed(seed: int):
 
 
 def get_device():
-    """Automatically detects if CUDA is available."""
+    """Automatically detects if CUDA is available and functional."""
     if torch.cuda.is_available():
-        device = torch.device("cuda")
-        print(f"✓ Using GPU: {torch.cuda.get_device_name(0)}")
+        try:
+            # Functional test: Try to allocate a tensor on GPU
+            dummy = torch.zeros(1).cuda()
+            del dummy
+            
+            device = torch.device("cuda")
+            print(f"✓ Using GPU: {torch.cuda.get_device_name(0)}")
+        except Exception as e:
+            print(f"⚠ GPU detected but failed functional test: {e}")
+            print("⚠ Fallback to CPU.")
+            device = torch.device("cpu")
     else:
         device = torch.device("cpu")
         print("⚠ CUDA not available, using CPU")
