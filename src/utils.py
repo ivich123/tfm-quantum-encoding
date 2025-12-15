@@ -18,8 +18,11 @@ def get_device():
     """Automatically detects if CUDA is available and functional."""
     if torch.cuda.is_available():
         try:
-            # Functional test: Try to allocate a tensor on GPU
+            # Functional test: Try to allocate a tensor on GPU and perform a computation
+            # This catches "cudaErrorNoKernelImageForDevice" which happens when 
+            # PyTorch version is incompatible with the GPU architecture.
             dummy = torch.zeros(1).cuda()
+            _ = dummy * 2  # Actual kernel execution
             del dummy
             
             device = torch.device("cuda")

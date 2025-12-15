@@ -27,10 +27,11 @@ def check_system():
         # Functional Test
         try:
             print("  - Functional Check: ", end="")
-            # Try to allocate a tensor on GPU
+            # Try to allocate a tensor on GPU and perform computation
             dummy = torch.zeros(1).cuda()
+            _ = dummy * 2
             del dummy
-            print("✓ OK (Tensor allocation successful)")
+            print("✓ OK (Tensor allocation & execution successful)")
             
             # Memory check
             free, total = torch.cuda.mem_get_info()
