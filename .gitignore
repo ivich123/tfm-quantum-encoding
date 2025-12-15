@@ -1,0 +1,20 @@
+# Environments
+venv/
+.venv/
+env/
+
+# Python cache
+__pycache__/
+*.pyc
+
+# Data & Outputs
+data/
+outputs/
+
+# IDEs
+.vscode/
+.idea/
+
+# OS specific
+.DS_Store
+.ipynb_checkpoints/

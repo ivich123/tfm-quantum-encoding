@@ -1,0 +1,26 @@
+experiment: "dev"
+seed: 42
+
+dataset:
+  name: "mnist" # "mnist" | "cifar10"
+  batch_size: 32
+  max_train: 5000
+  max_val: 1000
+  max_test: 2000
+  num_workers: 2
+
+model:
+  type: "hybrid" # "hybrid" | "baseline"
+  n_qubits: 8
+  n_layers: 1 # Number of VQC layers
+  n_outputs: 8
+  encoding: "angle" # "basis" | "angle" | "amplitude" | "feature_map" | "hybrid_angle_zz"
+  freeze_backbone: true
+
+optim:
+  name: "adam" # "adam" | "sgd"
+  lr: 0.0005
+  weight_decay: 0.0
+  epochs: 2
+device: "auto" # "auto" | "cpu" | "cuda"
+log_dir: "outputs"

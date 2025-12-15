@@ -1,0 +1,19 @@
+# --- Deep Learning Core ---
+torch>=2.0.0
+torchvision>=0.15.0
+
+# --- Quantum Computing ---
+pennylane>=0.43.0
+pennylane-lightning>=0.43.0
+# Uncomment if NVIDIA GPU is available:
+# pennylane-lightning-gpu>=0.43.0 
+
+# --- Data & Config ---
+numpy
+pandas
+PyYAML
+appdirs
+
+# --- Visualization ---
+matplotlib
+seaborn

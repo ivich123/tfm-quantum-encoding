@@ -1,0 +1,19 @@
+cff-version: 1.2.0
+message: "If you use this software, please cite it as below."
+authors:
+- family-names: "Gili Zaragoza"
+  given-names: "Albert"
+  orcid: "https://orcid.org/0009-0002-4618-9307"
+title: "Benchmarking Quantum Encodings in Hybrid Neural Networks for Computer Vision"
+version: 1.0.0
+date-released: 2025-12-15
+url: "https://github.com/ivich123/tfm-quantum-encoding"
+type: software
+license: MIT
+keywords:
+  - quantum-machine-learning
+  - computer-vision
+  - hybrid-neural-networks
+  - pytorch
+  - pennylane
+  - transfer-learning
