@@ -21,6 +21,6 @@ optim:
   name: "adam" # "adam" | "sgd"
   lr: 0.0005
   weight_decay: 0.0
-  epochs: 2
+  epochs: 20
 device: "auto" # "auto" | "cpu" | "cuda"
 log_dir: "outputs"
