@@ -22,7 +22,7 @@ graph TD
     Proj -->|n_qubits| VQC["Quantum Circuit<br/>(Lightning GPU/CPU)"]
     VQC -->|n_outputs| Head[Classifier Head]
     Head -->|Logits| Out[Classes]
-    
+
     style RN fill:#e1f5fe,stroke:#01579b
     style VQC fill:#f3e5f5,stroke:#4a148c
     style Head fill:#fff3e0,stroke:#e65100
@@ -30,23 +30,22 @@ graph TD
 
 ## 📊 Results Preview
 
-**Benchmark Summary (MNIST & CIFAR-10)**
-*Comparison of accuracy, gradient magnitude, and circuit complexity.*
+**Benchmark Summary (MNIST & CIFAR-10) for 8 qubits**
+_Comparison of accuracy, gradient magnitude, and circuit complexity._
 
-| Dataset | Encoding Strategy | Val Accuracy | Grad Norm | Circuit Depth | Gate Count | Circ. Time (ms) |
-| :--- | :--- | :---: | :---: | :---: | :---: | :---: |
-| **MNIST** | **Baseline (Classical)** | **93.7%** | 0.0000 | 0 | 0 | 0.00 |
-| MNIST | Hybrid Angle-ZZ | 74.3% | 0.2026 | 25 | 44 | 6.58 |
-| MNIST | Angle | 67.8% | 0.4629 | 9 | 23 | 4.33 |
-| MNIST | Feature Map (ZZ) | 66.2% | 0.1283 | 26 | 52 | 6.52 |
-| MNIST | Basis | 16.3% | 0.0494 | 9 | 16 | 3.67 |
-| | | | | | | |
-| **CIFAR10** | **Baseline (Classical)** | **75.7%** | 0.0000 | 0 | 0 | 0.00 |
-| CIFAR10 | Angle | 44.1% | 0.3018 | 9 | 23 | 4.38 |
-| CIFAR10 | Feature Map (ZZ) | 43.3% | 0.0764 | 26 | 52 | 6.89 |
-| CIFAR10 | Hybrid Angle-ZZ | 23.5% | 0.1758 | 25 | 44 | 6.32 |
-| CIFAR10 | Basis | 12.0% | 0.0787 | 9 | 16 | 3.99 |
-
+| Dataset     | Encoding Strategy        | Val Accuracy | Grad Norm | Circuit Depth | Gate Count | Circ. Time (ms) |
+| :---------- | :----------------------- | :----------: | :-------: | :-----------: | :--------: | :-------------: |
+| **MNIST**   | **Baseline (Classical)** |  **95.0%**   |  0.0000   |       0       |     0      |      0.00       |
+| MNIST       | Feature Map              |    76.5%     |  0.1861   |      26       |     52     |      6.25       |
+| MNIST       | Angle                    |    75.0%     |  0.4776   |       9       |     23     |      4.16       |
+| MNIST       | Hybrid Angle+ZZ          |    64.6%     |  0.4666   |      25       |     44     |      6.17       |
+| MNIST       | Basis                    |    28.4%     |  0.0619   |       9       |     16     |      3.65       |
+|             |                          |              |           |               |            |                 |
+| **CIFAR10** | **Baseline (Classical)** |  **77.7%**   |  0.0000   |       0       |     0      |      0.00       |
+| CIFAR10     | Angle                    |    52.2%     |  0.4144   |       9       |     23     |      4.30       |
+| CIFAR10     | Hybrid Angle+ZZ          |    47.4%     |  0.4235   |      25       |     44     |      6.19       |
+| CIFAR10     | Feature Map              |    41.2%     |  0.0462   |      26       |     52     |      6.84       |
+| CIFAR10     | Basis                    |    16.3%     |  0.0434   |       9       |     16     |      3.49       |
 
 ## 📦 Installation
 
@@ -100,13 +99,17 @@ If not installed, the system automatically falls back to optimized CPU execution
 This project uses a Python command-line interface (CLI). All experiments are run via `python -m src.cli`.
 
 ### 1. Diagnostics
+
 Check if your environment (and GPU) is correctly set up:
+
 ```bash
 python scripts/check_system.py
 ```
 
 ### 2. Quick Test
+
 To verify everything works correctly (1 encoding, few epochs):
+
 ```bash
 python -m src.cli --config configs/default.yaml \
     --override experiment=quick_test \
@@ -115,7 +118,9 @@ python -m src.cli --config configs/default.yaml \
 ```
 
 ### 3. Run a Full Experiment
+
 To train a specific model (e.g., Angle Encoding with 8 qubits on MNIST):
+
 ```bash
 python -m src.cli --config configs/default.yaml \
     --override model.encoding=angle \
@@ -125,7 +130,9 @@ python -m src.cli --config configs/default.yaml \
 ```
 
 ### 4. Full Comparison
+
 To reproduce the full comparison of all encodings:
+
 ```bash
 # Run for each encoding (angle, feature_map, basis, hybrid_angle_zz, amplitude)
 for encoding in angle feature_map basis hybrid_angle_zz amplitude; do
@@ -139,10 +146,13 @@ python -m src.cli --config configs/default.yaml --override model.type=baseline
 ```
 
 ### 5. Generate Plots and Tables
+
 Once experiments are complete, generate visualizations:
+
 ```bash
 python scripts/plot_all_results.py
 ```
+
 Results will be saved in `outputs/figures/`.
 
 ## 📊 Outputs
@@ -170,7 +180,6 @@ Key parameters in `configs/default.yaml`:
   - `optim.name`: "adam" | "sgd"
   - `seed`: Random seed for reproducibility
 
-
 ## 📈 Methodology
 
 **Why pretrained frozen backbone?**
@@ -185,9 +194,9 @@ Key parameters in `configs/default.yaml`:
 
 The encodings implemented in this repository are based on or inspired by the following works:
 
-- **Angle & Basis Encoding**: Standard textbook implementations (see *Nielsen & Chuang, Quantum Computation and Quantum Information*).
+- **Angle & Basis Encoding**: Standard textbook implementations (see _Nielsen & Chuang, Quantum Computation and Quantum Information_).
 - **Amplitude Encoding**: Implements the algorithm by **Möttönen et al. (2004)** via PennyLane's `AmplitudeEmbedding`.
-- **Feature Map (ZZ)**: Inspired by the ZZ-Feature Map from **Havlicek et al. (2019)** (*Nature*), with modified scaling factors for this specific benchmark.
+- **Feature Map (ZZ)**: Inspired by the ZZ-Feature Map from **Havlicek et al. (2019)** (_Nature_), with modified scaling factors for this specific benchmark.
 - **Hybrid Angle-ZZ**: A custom hardware-efficient encoding proposed in this work, combining single-qubit rotations (Angle) with ZZ-entanglement to capture correlations with minimal depth.
 
 ## 🎓 Citation
@@ -195,10 +204,10 @@ The encodings implemented in this repository are based on or inspired by the fol
 If you use this code for your research, please cite it using the metadata in CITATION.cff or the following BibTeX:
 
 @software{GiliZaragoza2025,
-  author = {Gili Zaragoza, Albert},
-  title = {Benchmarking Quantum Encodings in Hybrid Neural Networks for computer vision},
-  year = {2025},
-  url = {https://github.com/ivich123/tfm-quantum-encoding}
+author = {Gili Zaragoza, Albert},
+title = {Benchmarking Quantum Encodings in Hybrid Neural Networks for computer vision},
+year = {2025},
+url = {https://github.com/ivich123/tfm-quantum-encoding}
 }
 
 ## 📜 License

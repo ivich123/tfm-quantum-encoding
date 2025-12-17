@@ -1,3 +1,4 @@
+import torch
 import torch.nn as nn
 import torchvision.models as models
 from torchvision.models import ResNet18_Weights
@@ -25,6 +26,7 @@ class HybridNet(nn.Module):
     def forward(self, x):
         f = self.backbone(x)
         xq = self.proj(f)
+        xq = torch.tanh(xq)
         z = self.q(xq)
         return self.head(z)
 

@@ -22,7 +22,8 @@ def encoding(x, wires, kappa: float = 1.0, dense: bool = False, angle_scale=None
              if not dense else [(i, j) for i in range(n) for j in range(i+1, n)])
     for i, j in pairs:
         if i < len(x) and j < len(x):
-            phi = kappa * torch.pi * x[i] * x[j]
+            #phi = kappa * torch.pi * x[i] * x[j]
+            phi = kappa * x[i] * x[j]
             qml.CNOT(wires=[wires[i], wires[j]])
             qml.RZ(phi, wires=wires[j])
             qml.CNOT(wires=[wires[i], wires[j]])

@@ -85,7 +85,7 @@ class QuantumLayer(nn.Module):
         
         #TIMER: Measure GPU→CPU transfer
         t_transfer_start = time.perf_counter()
-        x_cpu = x.detach().cpu() if x.is_cuda else x
+        x_cpu = x.cpu() if x.is_cuda else x
         t_transfer_gpu_to_cpu = time.perf_counter() - t_transfer_start
         
         results = []

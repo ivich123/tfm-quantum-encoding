@@ -86,8 +86,9 @@ def load_all_experiments():
             df = load_experiment_data(dataset, encoding)
             
             if df is not None and len(df) > 0:
-                # Get final epoch metrics
-                final = df.iloc[-1]
+                # Get best epoch metrics (highest val_acc)
+                best_idx = df['val_acc'].idxmax()
+                final = df.loc[best_idx]
                 
                 # Get average gradient norm (last 5 epochs)
                 avg_grad = df['quantum_grad_norm'].tail(5).mean() if 'quantum_grad_norm' in df.columns else 0

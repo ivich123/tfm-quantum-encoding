@@ -4,9 +4,9 @@ seed: 42
 dataset:
   name: "mnist" # "mnist" | "cifar10"
   batch_size: 32
-  max_train: 5000
+  max_train: 6000
   max_val: 1000
-  max_test: 2000
+  max_test: 1000
   num_workers: 2
 
 model:
@@ -21,6 +21,6 @@ optim:
   name: "adam" # "adam" | "sgd"
   lr: 0.0005
   weight_decay: 0.0
-  epochs: 20
+  epochs: 30
 device: "auto" # "auto" | "cpu" | "cuda"
 log_dir: "outputs"
